@@ -1,17 +1,11 @@
-"""
-URL configuration for ecommerce project.
-"""
-from django.contrib import admin
-from django.urls import path, include
-from django.conf import settings
-from django.conf.urls.static import static
+from django.urls import path
+from rest_framework_simplejwt.views import TokenRefreshView
+from .views import RegisterView, LoginView, UserProfileView, LogoutView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/auth/', include('accounts.urls')),
-    path('api/products/', include('products.urls')),
-    path('api/orders/', include('orders.urls')),
+    path('register/', RegisterView.as_view(), name='register'),
+    path('login/', LoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+    path('profile/', UserProfileView.as_view(), name='profile'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
